@@ -1,5 +1,10 @@
 <?php
 
+// classe commande
+require_once("./classes/Command.php");
+// instanciation (on pourrait utiliser une classe statique)
+$command = new Command();
+
 // boucle infinie pour la saisie des commandes
 
 while (true) {
@@ -10,7 +15,7 @@ while (true) {
 
     // liste (list)
     if ($line === "list") {
-        echo "affichage de la liste des contacts\n";
+        $command->list();
     }
 }
 

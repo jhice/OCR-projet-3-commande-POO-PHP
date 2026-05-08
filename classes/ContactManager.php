@@ -18,7 +18,7 @@ class ContactManager
         $contactStatement->execute();
         $contacts = $contactStatement->fetchAll(PDO::FETCH_CLASS, "Contact");
         // Debug
-        print_r($contacts);
+        // print_r($contacts);
     
         return $contacts;
     }
