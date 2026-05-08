@@ -19,8 +19,58 @@ class ContactManager
         $contacts = $contactStatement->fetchAll(PDO::FETCH_CLASS, "Contact");
         // Debug
         // print_r($contacts);
-    
+
         return $contacts;
+    }
+
+    /**
+     * récupération d'un contact via son id
+     */
+    public static function findById(int $id)
+    {
+        // Client de connexion à la base de données
+        $client = DBConnect::getPDO();
+        // On récupère tout le contenu de la table contact
+        $query = 'SELECT * FROM contact WHERE id = :id';
+        $contactStatement = $client->prepare($query);
+        $contactStatement->execute([
+            'id' => $id,
+        ]);
+        $contact = $contactStatement->fetchObject("Contact");
+        // Debug
+        // print_r($contact);
+
+        return $contact;
+    }
+
+    /**
+     * ajouter un contact
+     * 
+     * @param array $data Données du contact
+     */
+    public static function create(array $data)
+    {
+        // connexion
+        $client = DBConnect::getPDO();
+
+        // Ecriture de la requête préparée
+        $query = 'INSERT INTO contact (name, email, phone_number) VALUES (:name, :email, :phone_number)';
+
+        // Préparation
+        $inserted = $client->prepare($query);
+
+        // Exécution
+        $success = $inserted->execute([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'phone_number' => $data['phone_number'],
+        ]);
+
+        if ($success) {
+            return (int) $client->lastInsertId();
+        } else {
+            return false;
+        }
     }
 }
 
