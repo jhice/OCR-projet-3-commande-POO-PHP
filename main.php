@@ -11,7 +11,6 @@ while (true) {
 
     // lecture de l'entrée utilisateur
     $line = readline("Entrez votre commande : ");
-    // echo "Vous avez saisi : $line\n";
 
     // liste (list)
     if ($line === "list") {
@@ -21,7 +20,7 @@ while (true) {
     // détail contact (detail id)
     // 1. preg_match() permet de vérifier un motif de chaine (ici la chaine "detail " suivie d'un nombre)
     // 2. preg_match() permet d'extraire une chaine (résultats sous forme de tableau)
-    if (preg_match('/detail (\d+)/', $line, $matches)) {
+    else if (preg_match('/detail (\d+)/', $line, $matches)) {
 
         // print_r($matches);
         // Array
@@ -42,7 +41,7 @@ while (true) {
     // name : lettres et tiret en nombre illimité (au moins 1)
     // email : pattern email
     // phone number : 8 chiffres exactement
-    if (preg_match('/create ([a-zA-Z- ]+), ([\w\-\.]+@([\w-]+\.)+[\w-]{2,}), (\d{8})/', $line, $matches)) {
+    else if (preg_match('/create ([a-zA-Z- ]+), ([\w\-\.]+@([\w-]+\.)+[\w-]{2,}), (\d{8})/', $line, $matches)) {
 
         // print_r($matches);
         // Array
@@ -65,7 +64,7 @@ while (true) {
     }
 
     // suppression contact (delete id)
-    if (preg_match('/delete (\d+)/', $line, $matches)) {
+    else if (preg_match('/delete (\d+)/', $line, $matches)) {
 
         // print_r($matches);
         // Array
@@ -80,5 +79,30 @@ while (true) {
 
         // on appelle la fonction dans l'objet $command
         $command->delete($id);
+    }
+
+    // aide
+    else if ($line === "help") {
+
+        // on affiche la liste des commandes
+        echo "help : affiche cette aide
+list : liste les contacts
+create [name], [email], [phone number] : crée un contact
+delete [id] : supprime un contact
+quit : quitte le programme\n";
+
+    }
+
+    // quitter
+    else if ($line === "quit") {
+        // on affiche un message
+        echo "Au revoir.\n";
+        // on sort de la boucle while
+        break;
+    }
+
+    // commande non trouvée
+    else {
+        echo "Commande non trouvée (tapez \"help\" pour voir la liste des commandes).\n";
     }
 }
