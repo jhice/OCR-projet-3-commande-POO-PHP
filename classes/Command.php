@@ -49,4 +49,30 @@ class Command
             echo "Erreur à l\'enregistrement\n";
         }
     }
+
+    /**
+     * supprime un contact
+     */
+    public function delete(int $id) {
+        
+        // on va chercher le contact dont l'id est fourni
+        $contact = ContactManager::findById($id);
+
+        // 
+        if (!$contact) {
+            echo "Contact non trouvé\n";
+
+            return;
+        }
+
+        // on supprime le contact dont l'id est fourni
+        $deleted = ContactManager::deleteById($id);
+
+        if ($deleted) {
+            // la méthode __toSting() est appelée
+            echo "Contact supprimé : {$contact->getName()}\n";
+        } else {
+            echo "Erreur à la suppression\n";
+        }
+    }
 }

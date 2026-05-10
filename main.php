@@ -63,4 +63,22 @@ while (true) {
 
         $command->create($data);
     }
+
+    // suppression contact (delete id)
+    if (preg_match('/delete (\d+)/', $line, $matches)) {
+
+        // print_r($matches);
+        // Array
+        // (
+        //     [0] => delete 42
+        //     [1] => 42
+        // )
+
+        // l'index 1 nous intéresse, sous forme d'entier (ici via le casting de type)
+        $id = (int) $matches[1];
+        // var_dump($id);
+
+        // on appelle la fonction dans l'objet $command
+        $command->delete($id);
+    }
 }

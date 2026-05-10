@@ -30,7 +30,7 @@ class ContactManager
     {
         // Client de connexion à la base de données
         $client = DBConnect::getPDO();
-        // On récupère tout le contenu de la table contact
+        // On récupère le contact dont l'id est fourni
         $query = 'SELECT * FROM contact WHERE id = :id';
         $contactStatement = $client->prepare($query);
         $contactStatement->execute([
@@ -71,6 +71,23 @@ class ContactManager
         } else {
             return false;
         }
+    }
+
+    /**
+     * récupération d'un contact via son id
+     */
+    public static function deleteById(int $id)
+    {
+        // Client de connexion à la base de données
+        $client = DBConnect::getPDO();
+        // On tente de supprimer le contact
+        $query = 'DELETE FROM contact WHERE id = :id';
+        $contactStatement = $client->prepare($query);
+        $success = $contactStatement->execute([
+            'id' => $id,
+        ]);
+
+        return $success;
     }
 }
 
