@@ -13,7 +13,7 @@ class ContactManager
         // Client de connexion à la base de données
         $client = DBConnect::getPDO();
         // On récupère tout le contenu de la table contact
-        $query = 'SELECT * FROM contact';
+        $query = 'SELECT * FROM contact;';
         $contactStatement = $client->prepare($query);
         $contactStatement->execute();
         $contacts = $contactStatement->fetchAll(PDO::FETCH_CLASS, "Contact");
@@ -31,7 +31,7 @@ class ContactManager
         // Client de connexion à la base de données
         $client = DBConnect::getPDO();
         // On récupère le contact dont l'id est fourni
-        $query = 'SELECT * FROM contact WHERE id = :id';
+        $query = 'SELECT * FROM contact WHERE id = :id;';
         $contactStatement = $client->prepare($query);
         $contactStatement->execute([
             'id' => $id,
@@ -54,7 +54,7 @@ class ContactManager
         $client = DBConnect::getPDO();
 
         // Ecriture de la requête préparée
-        $query = 'INSERT INTO contact (name, email, phone_number) VALUES (:name, :email, :phone_number)';
+        $query = 'INSERT INTO contact (name, email, phone_number) VALUES (:name, :email, :phone_number);';
 
         // Préparation
         $inserted = $client->prepare($query);
@@ -74,6 +74,33 @@ class ContactManager
     }
 
     /**
+     * modifier un contact
+     * 
+     * @param array $data Données du contact
+     */
+    public static function modify(array $data)
+    {
+        // connexion
+        $client = DBConnect::getPDO();
+
+        // Ecriture de la requête préparée
+        $query = 'UPDATE contact SET name = :name, email = :email, phone_number = :phone_number WHERE id = :id;';
+
+        // Préparation
+        $inserted = $client->prepare($query);
+
+        // Exécution
+        $success = $inserted->execute([
+            'id' => $data['id'],
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'phone_number' => $data['phone_number'],
+        ]);
+
+        return $success;
+    }
+
+    /**
      * récupération d'un contact via son id
      */
     public static function deleteById(int $id)
@@ -81,7 +108,7 @@ class ContactManager
         // Client de connexion à la base de données
         $client = DBConnect::getPDO();
         // On tente de supprimer le contact
-        $query = 'DELETE FROM contact WHERE id = :id';
+        $query = 'DELETE FROM contact WHERE id = :id;';
         $contactStatement = $client->prepare($query);
         $success = $contactStatement->execute([
             'id' => $id,

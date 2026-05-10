@@ -51,6 +51,36 @@ class Command
     }
 
     /**
+     * modifie un contact
+     */
+    public function modify(array $data) {
+
+        // on va chercher le contact dont l'id est fourni
+        $contact = ContactManager::findById($data["id"]);
+
+        // 
+        if (!$contact) {
+            echo "Contact non trouvé\n";
+
+            return;
+        }
+
+        // on appelle la méthode de modification sur la base de données
+        $updated = ContactManager::modify($data);
+
+        if ($updated) {
+            // OK
+            echo "Contact modifié : {$contact->getId()}\n";
+            // on affiche le contact modifié
+            $contact = ContactManager::findById($data["id"]);
+            echo $contact;
+        } else {
+            // Pas OK
+            echo "Erreur à l\'enregistrement\n";
+        }
+    }
+
+    /**
      * supprime un contact
      */
     public function delete(int $id) {

@@ -63,6 +63,36 @@ while (true) {
         $command->create($data);
     }
 
+    // modify [id] [name], [email], [phone number] : crée un contact
+    // name : lettres et tiret en nombre illimité (au moins 1)
+    // email : pattern email
+    // phone number : 8 chiffres exactement
+    else if (preg_match('/modify (\d+), ([a-zA-Z- ]+), ([\w\-\.]+@([\w-]+\.)+[\w-]{2,}), (\d{8})/', $line, $matches)) {
+
+        // print_r($matches);
+        // Array
+        // (
+        //     [0] => update 12, john rambo, rambo@cine.com, 12345678
+        //     [1] => 12
+        //     [2] => john rambo
+        //     [3] => rambo@cine.com
+        //     [4] => cine.
+        //     [5] => 12345678
+        // )
+
+        // on vérifie que le contact existe en base de données
+
+        // extraction des données sous forme de tableau pour envoi à la commande
+        $data = [
+            'id' => $matches[1],
+            'name' => $matches[2],
+            'email' => $matches[3],
+            'phone_number' => $matches[5],
+        ];
+
+        $command->modify($data);
+    }
+
     // suppression contact (delete id)
     else if (preg_match('/delete (\d+)/', $line, $matches)) {
 
