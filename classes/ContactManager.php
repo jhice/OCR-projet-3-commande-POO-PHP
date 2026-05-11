@@ -16,6 +16,7 @@ class ContactManager
         $query = 'SELECT * FROM contact;';
         $contactStatement = $client->prepare($query);
         $contactStatement->execute();
+        // on retourne une liste d'objets de type Contact
         $contacts = $contactStatement->fetchAll(PDO::FETCH_CLASS, "Contact");
         // Debug
         // print_r($contacts);
@@ -36,6 +37,7 @@ class ContactManager
         $contactStatement->execute([
             'id' => $id,
         ]);
+        // on retourne un objet de type Contact
         $contact = $contactStatement->fetchObject("Contact");
         // Debug
         // print_r($contact);
@@ -67,8 +69,10 @@ class ContactManager
         ]);
 
         if ($success) {
+            // on retourne l'id de l'enregistrement créé en cas de succès
             return (int) $client->lastInsertId();
         } else {
+            // ou false en cas d'échec de la requête
             return false;
         }
     }
@@ -96,7 +100,8 @@ class ContactManager
             'email' => $data['email'],
             'phone_number' => $data['phone_number'],
         ]);
-
+        // on retourne le retour de la méthode execute()
+        // TRUE on success or FALSE on failure
         return $success;
     }
 

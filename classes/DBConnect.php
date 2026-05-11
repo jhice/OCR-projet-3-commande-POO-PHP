@@ -29,7 +29,7 @@ class DBConnect
                     [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION],
                 );
             }
-            // on aura toujours la même instance de PDO
+            // on aura toujours la même instance unique de PDO
             // var_dump(static::$client);
         } catch (Exception $e) {
             // En cas d'erreur, on affiche un message et on arrête tout

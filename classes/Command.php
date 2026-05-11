@@ -7,7 +7,8 @@ class Command
     /**
      * liste des contacts
      */
-    public function list() {
+    public function list()
+    {
         // on va chercher les contacts
         $contacts = ContactManager::findAll();
         // on les affiche en bouclant sur la liste
@@ -20,7 +21,8 @@ class Command
     /**
      * affiche un contact
      */
-    public function detail(int $id) {
+    public function detail(int $id)
+    {
         // on va chercher le contact dont l'id est fourni
         $contact = ContactManager::findById($id);
 
@@ -35,7 +37,8 @@ class Command
     /**
      * crée un contact
      */
-    public function create(array $data) {
+    public function create(array $data)
+    {
 
         // on appelle la méthode d'ajout à la base de données
         $inserted = ContactManager::create($data);
@@ -53,12 +56,13 @@ class Command
     /**
      * modifie un contact
      */
-    public function modify(array $data) {
+    public function modify(array $data)
+    {
 
         // on va chercher le contact dont l'id est fourni
         $contact = ContactManager::findById($data["id"]);
 
-        // 
+        // non trouvé ?
         if (!$contact) {
             echo "Contact non trouvé\n";
 
@@ -83,8 +87,9 @@ class Command
     /**
      * supprime un contact
      */
-    public function delete(int $id) {
-        
+    public function delete(int $id)
+    {
+
         // on va chercher le contact dont l'id est fourni
         $contact = ContactManager::findById($id);
 

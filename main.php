@@ -15,12 +15,10 @@ while (true) {
     // liste (list)
     if ($line === "list") {
         $command->list();
-    }
-
-    // détail contact (detail id)
-    // 1. preg_match() permet de vérifier un motif de chaine (ici la chaine "detail " suivie d'un nombre)
-    // 2. preg_match() permet d'extraire une chaine (résultats sous forme de tableau)
-    else if (preg_match('/detail (\d+)/', $line, $matches)) {
+    } else if (preg_match('/detail (\d+)/', $line, $matches)) {
+        // détail contact (detail id)
+        // 1. preg_match() permet de vérifier un motif de chaine (ici la chaine "detail " suivie d'un nombre)
+        // 2. preg_match() permet d'extraire une chaine (résultats sous forme de tableau)
 
         // print_r($matches);
         // Array
@@ -35,13 +33,11 @@ while (true) {
 
         // on appelle la fonction dans l'objet $command
         $command->detail($id);
-    }
-
-    // create [name], [email], [phone number] : crée un contact
-    // name : lettres et tiret en nombre illimité (au moins 1)
-    // email : pattern email
-    // phone number : 8 chiffres exactement
-    else if (preg_match('/create ([a-zA-Z- ]+), ([\w\-\.]+@([\w-]+\.)+[\w-]{2,}), (\d{8})/', $line, $matches)) {
+    } else if (preg_match('/create ([a-zA-Z- ]+), ([\w\-\.]+@([\w-]+\.)+[\w-]{2,}), (\d{8})/', $line, $matches)) {
+        // create [name], [email], [phone number] : crée un contact
+        // name : lettres et tiret en nombre illimité (au moins 1)
+        // email : pattern email
+        // phone number : 8 chiffres exactement
 
         // print_r($matches);
         // Array
@@ -61,13 +57,11 @@ while (true) {
         ];
 
         $command->create($data);
-    }
-
-    // modify [id] [name], [email], [phone number] : crée un contact
-    // name : lettres et tiret en nombre illimité (au moins 1)
-    // email : pattern email
-    // phone number : 8 chiffres exactement
-    else if (preg_match('/modify (\d+), ([a-zA-Z- ]+), ([\w\-\.]+@([\w-]+\.)+[\w-]{2,}), (\d{8})/', $line, $matches)) {
+    } else if (preg_match('/modify (\d+), ([a-zA-Z- ]+), ([\w\-\.]+@([\w-]+\.)+[\w-]{2,}), (\d{8})/', $line, $matches)) {
+        // modify [id] [name], [email], [phone number] : crée un contact
+        // name : lettres et tiret en nombre illimité (au moins 1)
+        // email : pattern email
+        // phone number : 8 chiffres exactement
 
         // print_r($matches);
         // Array
@@ -91,10 +85,8 @@ while (true) {
         ];
 
         $command->modify($data);
-    }
-
-    // suppression contact (delete id)
-    else if (preg_match('/delete (\d+)/', $line, $matches)) {
+    } else if (preg_match('/delete (\d+)/', $line, $matches)) {
+        // suppression contact (delete id)
 
         // print_r($matches);
         // Array
@@ -109,30 +101,24 @@ while (true) {
 
         // on appelle la fonction dans l'objet $command
         $command->delete($id);
-    }
+    } else if ($line === "help") {
+        // aide
 
-    // aide
-    else if ($line === "help") {
-
-        // on affiche la liste des commandes
+        // on affiche la liste des commandes (à voir : HEREDOC pour l'indentation)
         echo "help : affiche cette aide
 list : liste les contacts
 create [name], [email], [phone number] : crée un contact
+modify [id], [name], [email], [phone number] : modifie un contact
 delete [id] : supprime un contact
 quit : quitte le programme\n";
-
-    }
-
-    // quitter
-    else if ($line === "quit") {
+    } else if ($line === "quit") {
+        // quitter
         // on affiche un message
         echo "Au revoir.\n";
         // on sort de la boucle while
         break;
-    }
-
-    // commande non trouvée
-    else {
+    } else {
+        // commande non trouvée
         echo "Commande non trouvée (tapez \"help\" pour voir la liste des commandes).\n";
     }
 }
